@@ -16,8 +16,8 @@ public static class GetBeanEndpoint
                 return Results.Ok(response);
             })
             .WithName(nameof(GetBeanEndpoint))
-            .WithSummary("gets bean by id")
-            .WithDescription("gets bean by id")
+            .WithSummary("gets bean amount by user id")
+            .WithDescription("gets bean amount by user id")
             .Produces<GetBeanResponse>()
             .MapToApiVersion(1);
     }

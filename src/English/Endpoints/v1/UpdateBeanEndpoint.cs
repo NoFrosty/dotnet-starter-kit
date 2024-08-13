@@ -17,8 +17,8 @@ public static class UpdateBeanEndpoint
                 return Results.Ok(response);
             })
             .WithName(nameof(UpdateBeanEndpoint))
-            .WithSummary("update a bean")
-            .WithDescription("update a bean")
+            .WithSummary("update a user bean amount")
+            .WithDescription("update a user bean amount")
             .Produces<UpdateBeanResponse>()
             .MapToApiVersion(1);
     }

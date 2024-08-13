@@ -16,8 +16,8 @@ public static class DeleteBeanEndpoint
                 return Results.NoContent();
             })
             .WithName(nameof(DeleteBeanEndpoint))
-            .WithSummary("deletes a bean")
-            .WithDescription("deletes a bean")
+            .WithSummary("deletes bean amount for user")
+            .WithDescription("deletes bean amount for user")
             .Produces(StatusCodes.Status204NoContent)
             .MapToApiVersion(1);
     }

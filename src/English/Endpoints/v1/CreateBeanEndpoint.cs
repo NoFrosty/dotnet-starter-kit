@@ -15,8 +15,8 @@ public static class CreateBeanEndpoint
             return Results.Ok(response);
         })
             .WithName(nameof(CreateBeanEndpoint))
-            .WithSummary("creates a bean")
-            .WithDescription("creates a bean")
+            .WithSummary("creates a bean counter for a user")
+            .WithDescription("creates a bean counter for a user")
             .Produces<CreateBeanResponse>()
             .MapToApiVersion(1);
     }
