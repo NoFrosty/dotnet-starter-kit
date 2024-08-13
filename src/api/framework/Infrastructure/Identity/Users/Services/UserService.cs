@@ -111,6 +111,7 @@ internal sealed partial class UserService(
             LastName = request.LastName,
             UserName = request.UserName,
             PhoneNumber = request.PhoneNumber,
+            School = request.School,
             IsActive = true,
             EmailConfirmed = true
         };

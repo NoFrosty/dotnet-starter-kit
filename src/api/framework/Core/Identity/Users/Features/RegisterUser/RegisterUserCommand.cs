@@ -11,6 +11,7 @@ public class RegisterUserCommand : IRequest<RegisterUserResponse>
     public string Password { get; set; } = default!;
     public string ConfirmPassword { get; set; } = default!;
     public string? PhoneNumber { get; set; }
+    public string? School { get; set; }
 
     [JsonIgnore]
     public string? Origin { get; set; }

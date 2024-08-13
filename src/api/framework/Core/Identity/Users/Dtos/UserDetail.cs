@@ -17,5 +17,7 @@ public class UserDetail
 
     public string? PhoneNumber { get; set; }
 
+    public string? School { get; set; }
+
     public Uri? ImageUrl { get; set; }
 }
