@@ -39,7 +39,7 @@ internal static class Extensions
                options.Password.RequireLowercase = false;
                options.Password.RequireNonAlphanumeric = false;
                options.Password.RequireUppercase = false;
-               options.User.RequireUniqueEmail = true;
+               options.User.RequireUniqueEmail = false;
            })
            .AddEntityFrameworkStores<IdentityDbContext>()
            .AddDefaultTokenProviders();

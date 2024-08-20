@@ -49,7 +49,7 @@ public partial class Login()
 
     private void FillAdministratorCredentials()
     {
-        _tokenRequest.Email = TenantConstants.Root.EmailAddress;
+        _tokenRequest.UserName = TenantConstants.Root.UserName;
         _tokenRequest.Password = TenantConstants.DefaultPassword;
         TenantId = TenantConstants.Root.Id;
     }
@@ -63,7 +63,7 @@ public partial class Login()
             Toast,
             _customValidation))
         {
-            Toast.Add($"Logged in as {_tokenRequest.Email}", Severity.Info);
+            Toast.Add($"Logged in as {_tokenRequest.UserName}", Severity.Info);
         }
 
         BusySubmitting = false;

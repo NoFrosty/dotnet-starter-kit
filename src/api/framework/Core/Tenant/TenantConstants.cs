@@ -6,6 +6,7 @@ public static class TenantConstants
         public const string Id = "root";
         public const string Name = "Root";
         public const string EmailAddress = "admin@root.com";
+        public const string UserName = "ROOT.ADMIN";
     }
 
     public const string DefaultPassword = "123Pa$$word!";

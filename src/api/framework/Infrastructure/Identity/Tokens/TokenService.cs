@@ -34,7 +34,7 @@ public sealed class TokenService : ITokenService
         var currentTenant = _multiTenantContextAccessor!.MultiTenantContext.TenantInfo;
         if (currentTenant == null) throw new UnauthorizedException();
         if (string.IsNullOrWhiteSpace(currentTenant.Id)
-           || await _userManager.FindByEmailAsync(request.Email.Trim().Normalize()) is not { } user
+           || await _userManager.FindByNameAsync(request.UserName.Trim().Normalize()) is not { } user
            || !await _userManager.CheckPasswordAsync(user, request.Password))
         {
             throw new UnauthorizedException();
@@ -60,7 +60,6 @@ public sealed class TokenService : ITokenService
 
         return await GenerateTokensAndUpdateUser(user, ipAddress);
     }
-
 
     public async Task<TokenResponse> RefreshTokenAsync(RefreshTokenCommand request, string ipAddress, CancellationToken cancellationToken)
     {
