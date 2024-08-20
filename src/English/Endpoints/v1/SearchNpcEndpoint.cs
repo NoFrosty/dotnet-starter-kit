@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
 namespace FSH.Starter.WebApi.English.Endpoints.v1;
-public static class SearchNpcsEndpoint
+public static class SearchNpcEndpoint
 {
     internal static RouteHandlerBuilder MapGetNpcListEndpoint(this IEndpointRouteBuilder endpoints)
     {
@@ -18,7 +18,7 @@ public static class SearchNpcsEndpoint
                 var response = await mediator.Send(new SearchNpcsCommand(filter));
                 return Results.Ok(response);
             })
-            .WithName(nameof(SearchNpcsEndpoint))
+            .WithName(nameof(SearchNpcEndpoint))
             .WithSummary("Gets a list of npcs")
             .WithDescription("Gets a list of npcs with pagination and filtering support")
             .Produces<PagedList<GetNpcResponse>>()
