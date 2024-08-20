@@ -1,4 +1,5 @@
 ﻿using FSH.Framework.Core.Persistence;
+using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.English.Domain;
 using FSH.Starter.WebApi.English.Exceptions;
 using MediatR;
@@ -14,11 +15,11 @@ public sealed class UpdateBeanHandler(
     public async Task<UpdateBeanResponse> Handle(UpdateBeanCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var bean = await repository.GetByIdAsync(request.Id, cancellationToken);
-        _ = bean ?? throw new BeanNotFoundException(request.Id);
-        var updatedBean = bean.Update(request.AmountOfBean);
+        var bean = await repository.FirstOrDefaultAsync(new EntitiesByPlayerIdSpec<BeanItem>(request.PlayerId), cancellationToken);
+        _ = bean ?? throw new BeanNotFoundException(request.PlayerId);
+        var updatedBean = bean.Update(request.AmountOfBeanMuzzy, request.AmountOfBeanBurn, request.AmountOfBeanCube, request.AmountOfBeanRoxy, request.AmountOfBeanOllie, request.AmountOfBeanNova, request.AmountOfBeanBeebee, request.AmountOfBeanLuna, request.AmountOfBeanFurry);
         await repository.UpdateAsync(updatedBean, cancellationToken);
-        logger.LogInformation("bean with id : {BeanId} updated.", bean.Id);
-        return new UpdateBeanResponse(bean.Id);
+        logger.LogInformation("bean with PlayerId : {PlayerId} updated.", bean.PlayerId);
+        return new UpdateBeanResponse(bean.PlayerId);
     }
 }

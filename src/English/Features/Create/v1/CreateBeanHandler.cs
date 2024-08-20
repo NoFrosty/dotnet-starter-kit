@@ -13,7 +13,7 @@ public sealed class CreateBeanHandler(
     public async Task<CreateBeanResponse> Handle(CreateBeanCommand request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var bean = BeanItem.Create((Guid)request.PlayerId!, (Guid)request.NpcId!, (int)request.AmountOfBean!);
+        var bean = BeanItem.Create((Guid)request.PlayerId!, (int)request.AmountOfBeanMuzzy!, (int)request.AmountOfBeanBurn!, (int)request.AmountOfBeanCube!, (int)request.AmountOfBeanRoxy!, (int)request.AmountOfBeanOllie!, (int)request.AmountOfBeanNova!, (int)request.AmountOfBeanBeebee!, (int)request.AmountOfBeanLuna!, (int)request.AmountOfBeanFurry!);
         await repository.AddAsync(bean, cancellationToken);
         logger.LogInformation("bean created {BeanId}", bean.Id);
         return new CreateBeanResponse(bean.Id);

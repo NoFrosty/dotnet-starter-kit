@@ -14,3 +14,11 @@ public class EntitiesByBaseFilterSpec<T> : Specification<T>
     public EntitiesByBaseFilterSpec(BaseFilter filter) =>
         Query.SearchBy(filter);
 }
+
+public class EntitiesByPlayerIdSpec<T> : Specification<T> where T : IPlayerLinkedEntities
+{
+    public EntitiesByPlayerIdSpec(Guid playerId)
+    {
+        Query.Where(x => x.PlayerId == playerId);
+    }
+}

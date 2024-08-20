@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace FSH.Starter.WebApi.English.Domain.Events;
-public record BeanItemCreated(Guid Id, Guid PlayerId, Guid NpcId, int AmountOfBean) : DomainEvent;
+public record BeanItemCreated(Guid Id, Guid PlayerId, int AmountOfBeanMuzzy, int AmountOfBeanBurn, int AmountOfBeanCube, int AmountOfBeanRoxy, int AmountOfBeanOllie, int AmountOfBeanNova, int AmountOfBeanBeebee, int AmountOfBeanLuna, int AmountOfBeanFurry) : DomainEvent;
 
 public class BeanItemCreatedEventHandler(
     ILogger<BeanItemCreatedEventHandler> logger,
@@ -15,7 +15,7 @@ public class BeanItemCreatedEventHandler(
     public async Task Handle(BeanItemCreated notification, CancellationToken cancellationToken)
     {
         logger.LogInformation("handling bean item created domain event..");
-        var cacheResponse = new GetBeanResponse(notification.Id, notification.PlayerId, notification.NpcId, notification.AmountOfBean);
+        var cacheResponse = new GetBeanResponse(notification.Id, notification.PlayerId, notification.AmountOfBeanMuzzy, notification.AmountOfBeanBurn, notification.AmountOfBeanCube, notification.AmountOfBeanRoxy, notification.AmountOfBeanOllie, notification.AmountOfBeanNova, notification.AmountOfBeanBeebee, notification.AmountOfBeanLuna, notification.AmountOfBeanFurry);
         await cache.SetAsync($"bean:{notification.Id}", cacheResponse, cancellationToken: cancellationToken);
     }
 }

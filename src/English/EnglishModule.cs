@@ -30,12 +30,6 @@ public static class EnglishModule
             //heartGroup.MapGetHeartListEndpoint();
             //heartGroup.MapHeartUpdationEndpoint();
             //heartGroup.MapHeartDeletionEndpoint();
-            var npcGroup = app.MapGroup("npcs").WithTags("npcs");
-            npcGroup.MapNpcCreationEndpoint();
-            npcGroup.MapGetNpcEndpoint();
-            npcGroup.MapGetNpcListEndpoint();
-            npcGroup.MapNpcUpdationEndpoint();
-            npcGroup.MapNpcDeletionEndpoint();
         }
     }
 
@@ -48,8 +42,6 @@ public static class EnglishModule
         builder.Services.AddKeyedScoped<IReadRepository<BeanItem>, EnglishRepository<BeanItem>>("english:beans");
         builder.Services.AddKeyedScoped<IRepository<HeartItem>, EnglishRepository<HeartItem>>("english:hearts");
         builder.Services.AddKeyedScoped<IReadRepository<HeartItem>, EnglishRepository<HeartItem>>("english:hearts");
-        builder.Services.AddKeyedScoped<IRepository<NpcItem>, EnglishRepository<NpcItem>>("english:npcs");
-        builder.Services.AddKeyedScoped<IReadRepository<NpcItem>, EnglishRepository<NpcItem>>("english:npcs");
         return builder;
     }
 

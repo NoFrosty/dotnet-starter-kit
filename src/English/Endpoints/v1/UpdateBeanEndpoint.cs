@@ -10,9 +10,8 @@ public static class UpdateBeanEndpoint
     internal static RouteHandlerBuilder MapBeanUpdationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/{id:guid}", async (Guid id, UpdateBeanCommand request, ISender mediator) =>
+            .MapPut("/", async (UpdateBeanCommand request, ISender mediator) =>
             {
-                if (id != request.Id) return Results.BadRequest();
                 var response = await mediator.Send(request);
                 return Results.Ok(response);
             })

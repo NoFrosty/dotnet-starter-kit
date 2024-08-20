@@ -15,7 +15,6 @@ public sealed class EnglishDbContext : FshDbContext
     {
     }
 
-    public DbSet<NpcItem> Npcs { get; set; } = null!;
     public DbSet<BeanItem> Beans { get; set; } = null!;
     public DbSet<HeartItem> Hearts { get; set; } = null!;
 

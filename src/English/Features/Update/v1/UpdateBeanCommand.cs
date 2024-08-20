@@ -2,5 +2,14 @@
 
 namespace FSH.Starter.WebApi.English.Features.Update.v1;
 public sealed record UpdateBeanCommand(
-       Guid Id,
-          int AmountOfBean) : IRequest<UpdateBeanResponse>;
+       Guid PlayerId,
+          int AmountOfBeanMuzzy,
+          int AmountOfBeanBurn,
+          int AmountOfBeanCube,
+          int AmountOfBeanRoxy,
+          int AmountOfBeanOllie,
+          int AmountOfBeanNova,
+          int AmountOfBeanBeebee,
+          int AmountOfBeanLuna,
+          int AmountOfBeanFurry
+          ) : IRequest<UpdateBeanResponse>;

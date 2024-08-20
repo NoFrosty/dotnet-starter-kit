@@ -20,7 +20,7 @@ public sealed class GetBeanHandler(
             {
                 var beanItem = await repository.GetByIdAsync(request.Id, cancellationToken);
                 if (beanItem == null) throw new BeanNotFoundException(request.Id);
-                return new GetBeanResponse(beanItem.Id, beanItem.PlayerId, beanItem.NpcId, beanItem.AmountOfBean);
+                return new GetBeanResponse(beanItem.Id, beanItem.PlayerId, beanItem.AmountOfBeanMuzzy, beanItem.AmountOfBeanBurn, beanItem.AmountOfBeanCube, beanItem.AmountOfBeanRoxy, beanItem.AmountOfBeanOllie, beanItem.AmountOfBeanNova, beanItem.AmountOfBeanBeebee, beanItem.AmountOfBeanLuna, beanItem.AmountOfBeanFurry);
             },
             cancellationToken: cancellationToken);
         return item!;

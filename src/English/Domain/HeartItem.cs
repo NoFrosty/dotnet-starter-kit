@@ -1,9 +1,10 @@
 ﻿using FSH.Framework.Core.Domain;
 using FSH.Framework.Core.Domain.Contracts;
+using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.English.Domain.Events;
 
 namespace FSH.Starter.WebApi.English.Domain;
-public class HeartItem : AuditableEntity, IAggregateRoot
+public class HeartItem : AuditableEntity, IAggregateRoot, IPlayerLinkedEntities
 {
     public Guid PlayerId { get; set; }
     public int AmountOfHeart { get; set; }
