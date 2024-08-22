@@ -24,12 +24,12 @@ public static class EnglishModule
             beanGroup.MapGetBeanListEndpoint();
             beanGroup.MapBeanUpdationEndpoint();
             beanGroup.MapBeanDeletionEndpoint();
-            //var heartGroup = app.MapGroup("hearts").WithTags("hearts");
-            //heartGroup.MapHeartCreationEndpoint();
-            //heartGroup.MapGetHeartEndpoint();
-            //heartGroup.MapGetHeartListEndpoint();
-            //heartGroup.MapHeartUpdationEndpoint();
-            //heartGroup.MapHeartDeletionEndpoint();
+            var heartGroup = app.MapGroup("hearts").WithTags("hearts");
+            heartGroup.MapHeartCreationEndpoint();
+            heartGroup.MapGetHeartEndpoint();
+            heartGroup.MapGetHeartListEndpoint();
+            heartGroup.MapHeartUpdationEndpoint();
+            heartGroup.MapHeartDeletionEndpoint();
         }
     }
 

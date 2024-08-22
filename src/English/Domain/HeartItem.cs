@@ -30,13 +30,4 @@ public class HeartItem : AuditableEntity, IAggregateRoot, IPlayerLinkedEntities
         return this;
 
     }
-
-    public HeartItem Increase(int amountOfHeart)
-    {
-        AmountOfHeart += amountOfHeart;
-
-        this.QueueDomainEvent(new HeartItemIncreased(this));
-
-        return this;
-    }
 }
