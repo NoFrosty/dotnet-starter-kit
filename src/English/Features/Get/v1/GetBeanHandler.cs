@@ -1,5 +1,6 @@
 ﻿using FSH.Framework.Core.Caching;
 using FSH.Framework.Core.Persistence;
+using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.English.Domain;
 using FSH.Starter.WebApi.English.Exceptions;
 using MediatR;
@@ -15,11 +16,12 @@ public sealed class GetBeanHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
         var item = await cache.GetOrSetAsync(
-            $"bean:{request.Id}",
+            $"bean:{request.PlayerId}",
             async () =>
             {
-                var beanItem = await repository.GetByIdAsync(request.Id, cancellationToken);
-                if (beanItem == null) throw new BeanNotFoundException(request.Id);
+                var beanItem = await repository.FirstOrDefaultAsync(new EntitiesByPlayerIdSpec<BeanItem>(request.PlayerId), cancellationToken);
+
+                if (beanItem == null) throw new BeanNotFoundException(request.PlayerId);
                 return new GetBeanResponse(beanItem.Id, beanItem.PlayerId, beanItem.AmountOfBeanMuzzy, beanItem.AmountOfBeanBurn, beanItem.AmountOfBeanCube, beanItem.AmountOfBeanRoxy, beanItem.AmountOfBeanOllie, beanItem.AmountOfBeanNova, beanItem.AmountOfBeanBeebee, beanItem.AmountOfBeanLuna, beanItem.AmountOfBeanFurry);
             },
             cancellationToken: cancellationToken);
