@@ -1,4 +1,6 @@
-﻿using FSH.Starter.WebApi.English.Features.Update.v1;
+﻿using System.Security.Claims;
+using FSH.Framework.Infrastructure.Identity.Users;
+using FSH.Starter.WebApi.English.Features.Update.v1;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -10,9 +12,15 @@ public static class UpdateBeanEndpoint
     internal static RouteHandlerBuilder MapBeanUpdationEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapPut("/", async (UpdateBeanCommand request, ISender mediator) =>
+            .MapPut("/", async (ClaimsPrincipal user, UpdateBeanCommand request, ISender mediator) =>
             {
-                var response = await mediator.Send(request);
+                if (user.GetUserId() is not { } userId || string.IsNullOrEmpty(userId))
+                {
+                    throw new UnauthorizedAccessException();
+                }
+
+                UpdateBeanCommandPlayerId requestId = new UpdateBeanCommandPlayerId(new Guid(userId), request);
+                var response = await mediator.Send(requestId);
                 return Results.Ok(response);
             })
             .WithName(nameof(UpdateBeanEndpoint))

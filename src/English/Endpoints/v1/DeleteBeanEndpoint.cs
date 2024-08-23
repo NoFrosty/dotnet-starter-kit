@@ -1,4 +1,5 @@
-﻿using FSH.Starter.WebApi.English.Features.Delete.v1;
+﻿using FSH.Framework.Infrastructure.Auth.Policy;
+using FSH.Starter.WebApi.English.Features.Delete.v1;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,7 @@ public static class DeleteBeanEndpoint
             .WithSummary("deletes bean amount for user")
             .WithDescription("deletes bean amount for user")
             .Produces(StatusCodes.Status204NoContent)
-            .MapToApiVersion(1);
+            .MapToApiVersion(1)
+            .RequirePermission("Permissions.Beans.Delete");
     }
 }

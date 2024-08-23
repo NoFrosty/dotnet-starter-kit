@@ -1,4 +1,6 @@
-﻿using FSH.Starter.WebApi.English.Features.Update.v1;
+﻿using System.Security.Claims;
+using FSH.Framework.Infrastructure.Identity.Users;
+using FSH.Starter.WebApi.English.Features.Update.v1;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -9,9 +11,16 @@ public static class UpdateHeartEndpoint
 {
     internal static RouteHandlerBuilder MapHeartUpdationEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPut("/", async (UpdateHeartCommand request, ISender mediator) =>
+        return endpoints.MapPut("/", async (ClaimsPrincipal user, UpdateHeartCommand request, ISender mediator) =>
         {
-            var response = await mediator.Send(request);
+            if (user.GetUserId() is not { } userId || string.IsNullOrEmpty(userId))
+            {
+                throw new UnauthorizedAccessException();
+            }
+
+            UpdateHeartCommandPlayerId requestId = new UpdateHeartCommandPlayerId(new Guid(userId), request);
+
+            var response = await mediator.Send(requestId);
             return Results.Ok(response);
         })
             .WithName(nameof(UpdateHeartEndpoint))

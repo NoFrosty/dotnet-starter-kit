@@ -1,4 +1,5 @@
 ﻿using FSH.Framework.Core.Paging;
+using FSH.Framework.Infrastructure.Auth.Policy;
 using FSH.Starter.WebApi.English.Features.Get.v1;
 using FSH.Starter.WebApi.English.Features.Search.v1;
 using MediatR;
@@ -21,6 +22,7 @@ public static class SearchHeartsEndpoint
             .WithSummary("searches for heart counters")
             .WithDescription("searches for heart counters")
             .Produces<PagedList<GetHeartResponse>>()
-            .MapToApiVersion(1);
+            .MapToApiVersion(1)
+            .RequirePermission("Permissions.Hearts.Search");
     }
 }

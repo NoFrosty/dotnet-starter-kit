@@ -1,4 +1,6 @@
-﻿using FSH.Starter.WebApi.English.Features.Get.v1;
+﻿using System.Security.Claims;
+using FSH.Framework.Infrastructure.Identity.Users;
+using FSH.Starter.WebApi.English.Features.Get.v1;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -10,9 +12,14 @@ public static class GetBeanEndpoint
     internal static RouteHandlerBuilder MapGetBeanEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/{id:guid}", async (Guid id, ISender mediator) =>
+            .MapGet("/", async (ClaimsPrincipal user, ISender mediator) =>
             {
-                var response = await mediator.Send(new GetBeanRequest(id));
+                if (user.GetUserId() is not { } userId || string.IsNullOrEmpty(userId))
+                {
+                    throw new UnauthorizedAccessException();
+                }
+
+                var response = await mediator.Send(new GetBeanRequest(new Guid(userId)));
                 return Results.Ok(response);
             })
             .WithName(nameof(GetBeanEndpoint))

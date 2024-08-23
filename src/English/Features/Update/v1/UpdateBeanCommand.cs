@@ -1,8 +1,5 @@
-﻿using MediatR;
-
-namespace FSH.Starter.WebApi.English.Features.Update.v1;
+﻿namespace FSH.Starter.WebApi.English.Features.Update.v1;
 public sealed record UpdateBeanCommand(
-       Guid PlayerId,
           int AmountOfBeanMuzzy,
           int AmountOfBeanBurn,
           int AmountOfBeanCube,
@@ -12,4 +9,4 @@ public sealed record UpdateBeanCommand(
           int AmountOfBeanBeebee,
           int AmountOfBeanLuna,
           int AmountOfBeanFurry
-          ) : IRequest<UpdateBeanResponse>;
+          );

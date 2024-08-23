@@ -1,4 +1,5 @@
 ﻿using FSH.Framework.Core.Paging;
+using FSH.Framework.Infrastructure.Auth.Policy;
 using FSH.Starter.WebApi.English.Features.Get.v1;
 using FSH.Starter.WebApi.English.Features.Search.v1;
 using MediatR;
@@ -22,6 +23,7 @@ public static class SearchBeansEndpoint
             .WithSummary("Gets a list of all user beans amount")
             .WithDescription("Gets a list of beans with pagination and filtering support")
             .Produces<PagedList<GetBeanResponse>>()
-            .MapToApiVersion(1);
+            .MapToApiVersion(1)
+            .RequirePermission("Permissions.Beans.Search");
     }
 }
