@@ -15,7 +15,7 @@ public class HeartItemUpdatedEventHandler(
     public async Task Handle(HeartItemUpdated notification, CancellationToken cancellationToken)
     {
         logger.LogInformation("handling heart item updated domain event..");
-        var cacheResponse = new GetHeartResponse(notification.item.Id, notification.item.PlayerId, notification.item.AmountOfHeart);
+        var cacheResponse = new GetHeartResponse(notification.item.AmountOfHeart);
         await cache.SetAsync($"heart:{notification.item.Id}", cacheResponse, cancellationToken: cancellationToken);
     }
 }

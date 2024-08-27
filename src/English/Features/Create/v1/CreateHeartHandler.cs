@@ -8,12 +8,12 @@ namespace FSH.Starter.WebApi.English.Features.Create.v1;
 public sealed class CreateHeartHandler(
     ILogger<CreateHeartHandler> logger,
     [FromKeyedServices("english:hearts")] IRepository<HeartItem> repository)
-    : IRequestHandler<CreateHeartCommand, CreateHeartResponse>
+    : IRequestHandler<CreateHeartCommandPlayerId, CreateHeartResponse>
 {
-    public async Task<CreateHeartResponse> Handle(CreateHeartCommand request, CancellationToken cancellationToken)
+    public async Task<CreateHeartResponse> Handle(CreateHeartCommandPlayerId request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
-        var heart = HeartItem.Create((Guid)request.PlayerId!, (int)request.AmountOfHeart!);
+        var heart = HeartItem.Create(request.PlayerId, request.Data.AmountOfHeart);
         await repository.AddAsync(heart, cancellationToken);
         logger.LogInformation("heart created {HeartId}", heart.Id);
         return new CreateHeartResponse(heart.Id);

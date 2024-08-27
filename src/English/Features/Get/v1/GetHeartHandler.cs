@@ -15,6 +15,6 @@ public sealed class GetHeartHandler(
         ArgumentNullException.ThrowIfNull(request);
         var heartItem = await repository.FirstOrDefaultAsync(new EntitiesByPlayerIdSpec<HeartItem>(request.PlayerId), cancellationToken);
         if (heartItem == null) throw new HeartNotFoundException(request.PlayerId);
-        return new GetHeartResponse(heartItem.Id, heartItem.PlayerId, heartItem.AmountOfHeart);
+        return new GetHeartResponse(heartItem.AmountOfHeart);
     }
 }

@@ -15,7 +15,7 @@ public class BeanItemCreatedEventHandler(
     public async Task Handle(BeanItemCreated notification, CancellationToken cancellationToken)
     {
         logger.LogInformation("handling bean item created domain event..");
-        var cacheResponse = new GetBeanResponse(notification.Id, notification.PlayerId, notification.AmountOfBeanMuzzy, notification.AmountOfBeanBurn, notification.AmountOfBeanCube, notification.AmountOfBeanRoxy, notification.AmountOfBeanOllie, notification.AmountOfBeanNova, notification.AmountOfBeanBeebee, notification.AmountOfBeanLuna, notification.AmountOfBeanFurry);
+        var cacheResponse = new GetBeanResponse(notification.AmountOfBeanMuzzy, notification.AmountOfBeanBurn, notification.AmountOfBeanCube, notification.AmountOfBeanRoxy, notification.AmountOfBeanOllie, notification.AmountOfBeanNova, notification.AmountOfBeanBeebee, notification.AmountOfBeanLuna, notification.AmountOfBeanFurry);
         await cache.SetAsync($"bean:{notification.Id}", cacheResponse, cancellationToken: cancellationToken);
     }
 }

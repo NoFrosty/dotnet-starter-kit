@@ -3,7 +3,6 @@ using MediatR;
 
 namespace FSH.Starter.WebApi.English.Features.Create.v1;
 public sealed record CreateBeanCommand(
-    [property: DefaultValue("")] Guid? PlayerId,
     [property: DefaultValue(0)] int? AmountOfBeanMuzzy,
     [property: DefaultValue(0)] int? AmountOfBeanBurn,
     [property: DefaultValue(0)] int? AmountOfBeanCube,
