@@ -14,13 +14,20 @@ public static class Extensions
     private static readonly ILogger _logger = Log.ForContext(typeof(Extensions));
     internal static DbContextOptionsBuilder ConfigureDatabase(this DbContextOptionsBuilder builder, string dbProvider, string connectionString)
     {
-        var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
-        dataSourceBuilder.EnableDynamicJson();
-        var dataSource = dataSourceBuilder.Build();
-
         return dbProvider.ToUpperInvariant() switch
         {
+            DbProviders.PostgreSQL => builder.UseNpgsql(connectionString, e =>
+                                 e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.PostgreSQL")).EnableSensitiveDataLogging(),
+            DbProviders.MSSQL => builder.UseSqlServer(connectionString, e =>
+                                e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.MSSQL")),
+            _ => throw new InvalidOperationException($"DB Provider {dbProvider} is not supported."),
+        };
+    }
 
+    internal static DbContextOptionsBuilder ConfigureDatabase(this DbContextOptionsBuilder builder, string dbProvider, string connectionString, NpgsqlDataSource dataSource)
+    {
+        return dbProvider.ToUpperInvariant() switch
+        {
             DbProviders.PostgreSQL => builder.UseNpgsql(dataSource, e =>
                                  e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.PostgreSQL")).EnableSensitiveDataLogging(),
             DbProviders.MSSQL => builder.UseSqlServer(connectionString, e =>
@@ -49,11 +56,15 @@ public static class Extensions
         where TContext : DbContext
     {
         ArgumentNullException.ThrowIfNull(services);
+        var serviceProvider = services.BuildServiceProvider();
+        var dbConfig = serviceProvider.GetRequiredService<IOptions<DatabaseOptions>>().Value;
+        NpgsqlDataSource dataSource = new NpgsqlDataSourceBuilder(dbConfig.ConnectionString)
+            .EnableDynamicJson()
+            .Build();
 
         services.AddDbContext<TContext>((sp, options) =>
         {
-            var dbConfig = sp.GetRequiredService<IOptions<DatabaseOptions>>().Value;
-            options.ConfigureDatabase(dbConfig.Provider, dbConfig.ConnectionString);
+            options.ConfigureDatabase(dbConfig.Provider, dbConfig.ConnectionString, dataSource);
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
         });
         return services;
