@@ -30,6 +30,13 @@ public static class EnglishModule
             heartGroup.MapGetHeartListEndpoint();
             heartGroup.MapHeartUpdationEndpoint();
             heartGroup.MapHeartDeletionEndpoint();
+
+            var cardGroup = app.MapGroup("cards").WithTags("cards");
+            cardGroup.MapCardCreationEndpoint();
+            cardGroup.MapGetCardEndpoint();
+            cardGroup.MapGetCardListEndpoint();
+            cardGroup.MapCardUpdationEndpoint();
+            //cardGroup.MapCardDeletionEndpoint();
         }
     }
 
@@ -42,6 +49,8 @@ public static class EnglishModule
         builder.Services.AddKeyedScoped<IReadRepository<BeanItem>, EnglishRepository<BeanItem>>("english:beans");
         builder.Services.AddKeyedScoped<IRepository<HeartItem>, EnglishRepository<HeartItem>>("english:hearts");
         builder.Services.AddKeyedScoped<IReadRepository<HeartItem>, EnglishRepository<HeartItem>>("english:hearts");
+        builder.Services.AddKeyedScoped<IRepository<CardItem>, EnglishRepository<CardItem>>("english:cards");
+        builder.Services.AddKeyedScoped<IReadRepository<CardItem>, EnglishRepository<CardItem>>("english:cards");
         return builder;
     }
 

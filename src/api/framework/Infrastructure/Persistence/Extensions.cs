@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Npgsql;
 using Serilog;
 
 namespace FSH.Framework.Infrastructure.Persistence;
@@ -13,9 +14,14 @@ public static class Extensions
     private static readonly ILogger _logger = Log.ForContext(typeof(Extensions));
     internal static DbContextOptionsBuilder ConfigureDatabase(this DbContextOptionsBuilder builder, string dbProvider, string connectionString)
     {
+        var dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+        dataSourceBuilder.EnableDynamicJson();
+        var dataSource = dataSourceBuilder.Build();
+
         return dbProvider.ToUpperInvariant() switch
         {
-            DbProviders.PostgreSQL => builder.UseNpgsql(connectionString, e =>
+
+            DbProviders.PostgreSQL => builder.UseNpgsql(dataSource, e =>
                                  e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.PostgreSQL")).EnableSensitiveDataLogging(),
             DbProviders.MSSQL => builder.UseSqlServer(connectionString, e =>
                                 e.MigrationsAssembly("FSH.Starter.WebApi.Migrations.MSSQL")),

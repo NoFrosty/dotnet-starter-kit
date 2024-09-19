@@ -18,10 +18,15 @@ public sealed class EnglishDbContext : FshDbContext
     public DbSet<BeanItem> Beans { get; set; } = null!;
     public DbSet<HeartItem> Hearts { get; set; } = null!;
 
+    public DbSet<CardItem> Cards { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ArgumentNullException.ThrowIfNull(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(EnglishDbContext).Assembly);
         modelBuilder.HasDefaultSchema(SchemaNames.English);
+
+        modelBuilder.Entity<CardItem>().Property(p => p.UnlockedCards)
+            .HasColumnType("jsonb");
     }
 }

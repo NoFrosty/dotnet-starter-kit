@@ -106,12 +106,12 @@ internal sealed partial class UserService(
         // create user entity
         var user = new FshUser
         {
-            Email = request.Email,
-            FirstName = request.FirstName,
-            LastName = request.LastName,
+            Email = request.Email ?? string.Empty,
+            FirstName = request.FirstName ?? string.Empty,
+            LastName = request.LastName ?? string.Empty,
             UserName = request.UserName,
-            PhoneNumber = request.PhoneNumber,
-            School = request.School,
+            PhoneNumber = request.PhoneNumber ?? string.Empty,
+            School = request.School ?? string.Empty,
             IsActive = true,
             EmailConfirmed = true
         };

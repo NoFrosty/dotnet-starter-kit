@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FSH.Starter.WebApi.English.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FSH.Starter.WebApi.Migrations.PostgreSQL.English
 {
     [DbContext(typeof(EnglishDbContext))]
-    partial class EnglishDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240919011407_Updated Card table as jsonb")]
+    partial class UpdatedCardtableasjsonb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
