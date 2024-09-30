@@ -17,8 +17,8 @@ public sealed class EnglishDbContext : FshDbContext
 
     public DbSet<BeanItem> Beans { get; set; } = null!;
     public DbSet<HeartItem> Hearts { get; set; } = null!;
-
     public DbSet<CardItem> Cards { get; set; } = null!;
+    public DbSet<ProgressItem> Progresss { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

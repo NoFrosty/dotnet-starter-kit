@@ -37,6 +37,12 @@ public static class EnglishModule
             cardGroup.MapGetCardListEndpoint();
             cardGroup.MapCardUpdationEndpoint();
             //cardGroup.MapCardDeletionEndpoint();
+
+            var progressGroup = app.MapGroup("progress").WithTags("progress");
+            progressGroup.MapProgressCreationEndpoint();
+            progressGroup.MapGetProgressEndpoint();
+            progressGroup.MapGetProgressListEndpoint();
+            progressGroup.MapProgressUpdationEndpoint();
         }
     }
 
@@ -51,6 +57,9 @@ public static class EnglishModule
         builder.Services.AddKeyedScoped<IReadRepository<HeartItem>, EnglishRepository<HeartItem>>("english:hearts");
         builder.Services.AddKeyedScoped<IRepository<CardItem>, EnglishRepository<CardItem>>("english:cards");
         builder.Services.AddKeyedScoped<IReadRepository<CardItem>, EnglishRepository<CardItem>>("english:cards");
+        builder.Services.AddKeyedScoped<IRepository<ProgressItem>, EnglishRepository<ProgressItem>>("english:progress");
+        builder.Services.AddKeyedScoped<IReadRepository<ProgressItem>, EnglishRepository<ProgressItem>>("english:progress");
+
         return builder;
     }
 
