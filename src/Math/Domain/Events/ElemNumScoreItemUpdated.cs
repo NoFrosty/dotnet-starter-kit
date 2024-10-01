@@ -14,7 +14,7 @@ public class ElemNumScoreItemUpdatedEventHandler(
     public async Task Handle(ElemNumScoreItemUpdated notification, CancellationToken cancellationToken)
     {
         logger.LogInformation("handling elem num score item updated domain event..");
-        var cacheResponse = new GetElemNumScoreResponse(notification.item.Score, -2);
+        var cacheResponse = new GetScoreResponse(notification.item.Score, -2);
         await cache.SetAsync($"elemNumScore:{notification.item.Id}", cacheResponse, cancellationToken: cancellationToken);
     }
 }

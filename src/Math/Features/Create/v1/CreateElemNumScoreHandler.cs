@@ -8,14 +8,14 @@ namespace FSH.Starter.WebApi.Math.Features.Create.v1;
 public sealed class CreateElemNumScoreHandler(
     ILogger<CreateElemNumScoreHandler> logger,
     [FromKeyedServices("math:elemNumScores")] IRepository<ElemNumScoreItem> repository
-    ) : IRequestHandler<CreateElemNumScoreCommandPlayerId, CreateElemNumScoreResponse>
+    ) : IRequestHandler<CreateScoreCommandPlayerId, CreateScoreResponse>
 {
-    public async Task<CreateElemNumScoreResponse> Handle(CreateElemNumScoreCommandPlayerId request, CancellationToken cancellationToken)
+    public async Task<CreateScoreResponse> Handle(CreateScoreCommandPlayerId request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var elemNumScore = ElemNumScoreItem.Create(request.PlayerId, request.Data.Score);
         await repository.AddAsync(elemNumScore, cancellationToken);
         logger.LogInformation("elemNumScore created {ElemNumScoreId}", elemNumScore.Id);
-        return new CreateElemNumScoreResponse(elemNumScore.Id, elemNumScore.Score);
+        return new CreateScoreResponse(elemNumScore.Id, elemNumScore.Score);
     }
 }

@@ -9,9 +9,9 @@ namespace FSH.Starter.WebApi.Math.Features.Get.v1;
 public sealed class GetElemNumScoreTopRanksHandler(
     [FromKeyedServices("math:elemNumScores")] IRepository<ElemNumScoreItem> repository,
     IUserService userService)
-    : IRequestHandler<GetElemNumScoreTopRanksRequest, GetElemNumScoreTopRanksResponse>
+    : IRequestHandler<GetScoreTopRanksRequest, GetScoreTopRanksResponse>
 {
-    public async Task<GetElemNumScoreTopRanksResponse> Handle(GetElemNumScoreTopRanksRequest request, CancellationToken cancellationToken)
+    public async Task<GetScoreTopRanksResponse> Handle(GetScoreTopRanksRequest request, CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(request);
         var elemNumScores = await repository.ListAsync(new Top10EntitiesOrderedByScoreSpec<ElemNumScoreItem>(), cancellationToken);
@@ -27,6 +27,6 @@ public sealed class GetElemNumScoreTopRanksHandler(
             }
         }
 
-        return new GetElemNumScoreTopRanksResponse(ranking);
+        return new GetScoreTopRanksResponse(ranking);
     }
 }

@@ -12,13 +12,13 @@ public static class GetElemNumScoreTopRanksEndpoint
         return endpoints
             .MapGet("/topranks", async (ISender mediator) =>
             {
-                var response = await mediator.Send(new GetElemNumScoreTopRanksRequest());
+                var response = await mediator.Send(new GetScoreTopRanksRequest());
                 return Results.Ok(response);
             })
             .WithName(nameof(GetElemNumScoreTopRanksEndpoint))
             .WithSummary("gets top ranks for element number score")
             .WithDescription("gets top ranks for element number score")
-            .Produces<GetElemNumScoreTopRanksResponse>()
+            .Produces<GetScoreTopRanksResponse>()
             .MapToApiVersion(1);
     }
 }

@@ -18,13 +18,13 @@ public static class GetElemNumScoreEndpoint
                 {
                     throw new UnauthorizedAccessException();
                 }
-                var response = await mediator.Send(new GetElemNumScoreRequest(new Guid(userId)));
+                var response = await mediator.Send(new GetScoreRequest(new Guid(userId)));
                 return Results.Ok(response);
             })
             .WithName(nameof(GetElemNumScoreEndpoint))
             .WithSummary("gets element number score by user id")
             .WithDescription("gets element number score by user id")
-            .Produces<GetElemNumScoreResponse>()
+            .Produces<GetScoreResponse>()
             .MapToApiVersion(1);
     }
 }

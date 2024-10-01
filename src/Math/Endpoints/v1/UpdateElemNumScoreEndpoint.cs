@@ -11,20 +11,20 @@ public static class UpdateElemNumScoreEndpoint
 {
     internal static RouteHandlerBuilder MapUpdateElemNumScoreEndpoint(this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapPut("/", async (ClaimsPrincipal user, UpdateElemNumScoreCommand request, ISender mediator) =>
+        return endpoints.MapPut("/", async (ClaimsPrincipal user, UpdateScoreCommand request, ISender mediator) =>
         {
             if (user.GetUserId() is not { } userId || string.IsNullOrEmpty(userId))
             {
                 throw new UnauthorizedAccessException();
             }
-            UpdateElemNumScoreCommandPlayerId requestId = new UpdateElemNumScoreCommandPlayerId(new Guid(userId), request);
+            UpdateScoreCommandPlayerId requestId = new UpdateScoreCommandPlayerId(new Guid(userId), request);
             var response = await mediator.Send(requestId);
             return Results.Ok(response);
         })
             .WithName(nameof(UpdateElemNumScoreEndpoint))
             .WithSummary("updates an element number score for a user")
             .WithDescription("updates an element number score for a user")
-            .Produces<UpdateElemNumScoreResponse>()
+            .Produces<UpdateScoreResponse>()
             .MapToApiVersion(1);
     }
 }

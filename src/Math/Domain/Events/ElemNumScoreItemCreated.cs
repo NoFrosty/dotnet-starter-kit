@@ -16,7 +16,7 @@ public class ElemNumScoreItemCreatedEventHandler(
         logger.LogInformation("handling elem num score item created domain event..");
 
 
-        var cacheResponse = new GetElemNumScoreResponse(notification.Score, -1);
+        var cacheResponse = new GetScoreResponse(notification.Score, -1);
         await cache.SetAsync($"elemNumScore:{notification.Id}", cacheResponse, cancellationToken: cancellationToken);
     }
 }
