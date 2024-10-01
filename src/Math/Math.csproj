@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>FSH.Starter.WebApi.Math</AssemblyName>
+    <RootNamespace>FSH.Starter.WebApi.Math</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\api\framework\Core\Core.csproj" />
+    <ProjectReference Include="..\api\framework\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\api\modules\Catalog\Catalog.Application\Catalog.Application.csproj" />
+  </ItemGroup>
+
+</Project>

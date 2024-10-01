@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 namespace FSH.Starter.WebApi.English.Infrastructure;
 public static class EnglishModule
 {
-
     public class Endpoints : CarterModule
     {
         public Endpoints() : base("english") { }

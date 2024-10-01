@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\English\English.csproj" />
+    <ProjectReference Include="..\..\Math\Math.csproj" />
     <ProjectReference Include="..\framework\Core\Core.csproj" />
     <ProjectReference Include="..\framework\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\migrations\MSSQL\MSSQL.csproj" />

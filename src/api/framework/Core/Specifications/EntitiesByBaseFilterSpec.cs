@@ -22,3 +22,19 @@ public class EntitiesByPlayerIdSpec<T> : Specification<T> where T : IPlayerLinke
         Query.Where(x => x.PlayerId == playerId);
     }
 }
+
+public class EntitiesWithScoreGreaterThanSpec<T> : Specification<T> where T : IPlayerScoreEntities
+{
+    public EntitiesWithScoreGreaterThanSpec(int score)
+    {
+        Query.Where(x => x.Score > score);
+    }
+}
+
+public class Top10EntitiesOrderedByScoreSpec<T> : Specification<T> where T : IPlayerScoreEntities
+{
+    public Top10EntitiesOrderedByScoreSpec()
+    {
+        Query.OrderByDescending(x => x.Score).Take(10);
+    }
+}
