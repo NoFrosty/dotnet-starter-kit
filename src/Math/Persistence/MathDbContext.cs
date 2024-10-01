@@ -16,6 +16,7 @@ public sealed class MathDbContext : FshDbContext
     }
 
     public DbSet<ElemNumScoreItem> ElemNumScores { get; set; } = null!;
+    public DbSet<MiddleLinearScoreItem> MiddleLinearScores { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
