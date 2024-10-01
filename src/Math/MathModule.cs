@@ -22,6 +22,7 @@ namespace FSH.Starter.WebApi.Math.Infrastructure
                 elemNumScores.MapCreateElemNumScoreEndpoint();
                 elemNumScores.MapGetElemNumScoreEndpoint();
                 elemNumScores.MapUpdateElemNumScoreEndpoint();
+                elemNumScores.MapGetElemNumScoreTopRanksEndpoint();
             }
         }
 
