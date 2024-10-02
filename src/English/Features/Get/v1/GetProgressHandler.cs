@@ -1,7 +1,6 @@
 ﻿using FSH.Framework.Core.Persistence;
 using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.English.Domain;
-using FSH.Starter.WebApi.English.Exceptions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +13,14 @@ public sealed class GetProgressHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
         var progressItem = await repository.FirstOrDefaultAsync(new EntitiesByPlayerIdSpec<ProgressItem>(request.PlayerId), cancellationToken);
-        if (progressItem == null) throw new ProgressNotFoundException(request.PlayerId);
+
+        if (progressItem == null)
+        {
+            progressItem = ProgressItem.Create(request.PlayerId, 0, 0, 0, 0, 0, 0, 0);
+            await repository.AddAsync(progressItem, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
+        }
+
         return new GetProgressResponse(progressItem.Unit1Progress, progressItem.Unit2Progress, progressItem.Unit3Progress, progressItem.Unit4Progress, progressItem.Unit5Progress, progressItem.Unit6Progress, progressItem.Unit7Progress);
     }
 }

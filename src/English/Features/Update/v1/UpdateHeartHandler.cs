@@ -1,7 +1,6 @@
 ﻿using FSH.Framework.Core.Persistence;
 using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.English.Domain;
-using FSH.Starter.WebApi.English.Exceptions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -16,10 +15,20 @@ public sealed class UpdateHeartHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
         var heart = await repository.FirstOrDefaultAsync(new EntitiesByPlayerIdSpec<HeartItem>(request.PlayerId), cancellationToken);
-        _ = heart ?? throw new HeartNotFoundException(request.PlayerId);
-        var updatedHeart = heart.Update(request.Data.AmountOfHeart);
 
-        await repository.UpdateAsync(updatedHeart, cancellationToken);
+        if (heart == null)
+        {
+            heart = HeartItem.Create(request.PlayerId, request.Data.AmountOfHeart);
+            await repository.AddAsync(heart, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
+        }
+        else
+        {
+
+            var updatedHeart = heart.Update(request.Data.AmountOfHeart);
+            await repository.UpdateAsync(updatedHeart, cancellationToken);
+        }
+
         logger.LogInformation("heart with id : {HeartId} updated", heart.Id);
         return new UpdateHeartResponse(heart.PlayerId);
     }

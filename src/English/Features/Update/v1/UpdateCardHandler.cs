@@ -1,7 +1,6 @@
 ﻿using FSH.Framework.Core.Persistence;
 using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.English.Domain;
-using FSH.Starter.WebApi.English.Exceptions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -16,10 +15,19 @@ public sealed class UpdateCardHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
         var card = await repository.FirstOrDefaultAsync(new EntitiesByPlayerIdSpec<CardItem>(request.PlayerId), cancellationToken);
-        _ = card ?? throw new CardNotFoundException(request.PlayerId);
-        var updatedCard = card.Update(request.Data.UnlockedCards);
 
-        await repository.UpdateAsync(updatedCard, cancellationToken);
+        if (card == null)
+        {
+            card = CardItem.Create(request.PlayerId, request.Data.UnlockedCards);
+            await repository.AddAsync(card, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
+        }
+        else
+        {
+            var updatedCard = card.Update(request.Data.UnlockedCards);
+            await repository.UpdateAsync(updatedCard, cancellationToken);
+        }
+
         logger.LogInformation("card with id : {CardId} updated", card.Id);
         return new UpdateCardResponse(card.Id);
     }

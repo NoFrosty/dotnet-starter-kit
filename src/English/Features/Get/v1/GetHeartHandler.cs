@@ -1,7 +1,6 @@
 ﻿using FSH.Framework.Core.Persistence;
 using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.English.Domain;
-using FSH.Starter.WebApi.English.Exceptions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +13,14 @@ public sealed class GetHeartHandler(
     {
         ArgumentNullException.ThrowIfNull(request);
         var heartItem = await repository.FirstOrDefaultAsync(new EntitiesByPlayerIdSpec<HeartItem>(request.PlayerId), cancellationToken);
-        if (heartItem == null) throw new HeartNotFoundException(request.PlayerId);
+
+        if (heartItem == null)
+        {
+            heartItem = HeartItem.Create(request.PlayerId, 0);
+            await repository.AddAsync(heartItem, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
+        }
+
         return new GetHeartResponse(heartItem.AmountOfHeart);
     }
 }

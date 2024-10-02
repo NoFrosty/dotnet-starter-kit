@@ -1,7 +1,6 @@
 ﻿using FSH.Framework.Core.Persistence;
 using FSH.Framework.Core.Specifications;
 using FSH.Starter.WebApi.English.Domain;
-using FSH.Starter.WebApi.English.Exceptions;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +14,13 @@ public sealed class GetBeanHandler(
         ArgumentNullException.ThrowIfNull(request);
         var beanItem = await repository.FirstOrDefaultAsync(new EntitiesByPlayerIdSpec<BeanItem>(request.PlayerId), cancellationToken);
 
-        if (beanItem == null) throw new BeanNotFoundException(request.PlayerId);
+        if (beanItem == null)
+        {
+            beanItem = BeanItem.Create(request.PlayerId, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+            await repository.AddAsync(beanItem, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
+        }
+
         return new GetBeanResponse(beanItem.AmountOfBeanMuzzy, beanItem.AmountOfBeanBurn, beanItem.AmountOfBeanCube, beanItem.AmountOfBeanRoxy, beanItem.AmountOfBeanOllie, beanItem.AmountOfBeanNova, beanItem.AmountOfBeanBeebee, beanItem.AmountOfBeanLuna, beanItem.AmountOfBeanFurry);
     }
 }

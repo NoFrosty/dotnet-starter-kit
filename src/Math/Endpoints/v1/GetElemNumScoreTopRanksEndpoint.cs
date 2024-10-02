@@ -10,7 +10,7 @@ public static class GetElemNumScoreTopRanksEndpoint
     internal static RouteHandlerBuilder MapGetElemNumScoreTopRanksEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/topranks", async (ISender mediator) =>
+            .MapGet("/elemnumtopranks", async (ISender mediator) =>
             {
                 var response = await mediator.Send(new GetScoreTopRanksRequest());
                 return Results.Ok(response);

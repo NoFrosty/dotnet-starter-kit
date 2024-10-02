@@ -29,6 +29,10 @@ namespace FSH.Starter.WebApi.Math.Infrastructure
                 middleLinearScores.MapGetMiddleLinearScoreEndpoint();
                 middleLinearScores.MapUpdateMiddleLinearScoreEndpoint();
                 middleLinearScores.MapGetMiddleLinearScoreTopRanksEndpoint();
+
+                var middleLinearProgress = app.MapGroup("middleLinearProgress").WithTags("middleLinearProgress");
+                middleLinearProgress.MapGetMiddleLinearProgressEndpoint();
+                middleLinearProgress.MapUpdateMiddleLinearProgressEndpoint();
             }
         }
 
@@ -42,6 +46,9 @@ namespace FSH.Starter.WebApi.Math.Infrastructure
 
             builder.Services.AddKeyedScoped<IRepository<MiddleLinearScoreItem>, MathRepository<MiddleLinearScoreItem>>("math:middleLinearScores");
             builder.Services.AddKeyedScoped<IReadRepository<MiddleLinearScoreItem>, MathRepository<MiddleLinearScoreItem>>("math:middleLinearScores");
+
+            builder.Services.AddKeyedScoped<IRepository<MiddleLinearProgressItem>, MathRepository<MiddleLinearProgressItem>>("math:middleLinearProgress");
+            builder.Services.AddKeyedScoped<IReadRepository<MiddleLinearProgressItem>, MathRepository<MiddleLinearProgressItem>>("math:middleLinearProgress");
 
             return builder;
         }

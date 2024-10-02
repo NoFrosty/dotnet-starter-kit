@@ -10,7 +10,7 @@ public static class GetMiddleLinearScoreTopRanksEndpoint
     internal static RouteHandlerBuilder MapGetMiddleLinearScoreTopRanksEndpoint(this IEndpointRouteBuilder endpoints)
     {
         return endpoints
-            .MapGet("/topranks", async (ISender mediator) =>
+            .MapGet("/middlelineartopranks", async (ISender mediator) =>
             {
                 var response = await mediator.Send(new GetScoreTopRanksRequest());
                 return Results.Ok(response);
